@@ -1,17 +1,24 @@
 if note
-	h1 Edit Note
+  h1 Edit Note
 else
-	h1 New Note
+  h1 New Note
 
 - var item = note || {title: '', text: ''}
 - var override = note ? '/' + note._id + '?_method=PUT' : ''
 
 form(method='POST' action='/notes#{override}')
-	.input-group
-		label(for='title') Title
-		input#title(type='text', name='title', value='#{item.title}')
-	.input-group
-		label(for='text') Text
-		textarea#text(name='text')= item.text
-	.input-group
-		button(type='submit', value='Save') Save
+  .input-group
+    label(for='title') Title
+    input#title(type='text', name='title', value='#{item.title}')
+  .input-group
+    label(for='text') Text
+    textarea#text(name='text')= item.text
+  .input-group
+    label(for='cat') Category
+    select#cat(name='category')
+      for cat in categories
+        option(value=cat._id, selected=selected)= cat.name
+  .input-group
+    button(type='submit', value='Save') Save
+a(href='/notes')
+  button Cancel

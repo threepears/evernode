@@ -1,6 +1,11 @@
 h1= note.title
 p= note.text
+p Category name: #{note.category.name}
+p Category description: #{note.category.description}
+
 form(action='/notes/#{note._id}/edit')
   input(type='submit', value='edit')
 form(action='/notes/#{note._id}?_method=DELETE', method='POST')
   input(type='submit', value='delete')
+a(href='/notes')
+  button Home

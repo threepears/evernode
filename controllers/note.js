@@ -1,22 +1,38 @@
 "use strict";
 
 const Note = require('../models/note');
+const Category = require('../models/categories');
 
 module.exports = {
 	edit (req, res) {
-		Note.findById(req.params.id, (err, note) => {
+		Category.find({}, (err, categories) => {
+			if (err) throw err;
+
+			res.render('new-note', {
+				note: req.note,
+				categories: categories
+			});
+		});
+		// If not using router.param function (as commented out in the routes folder version of node.js), you would write the following instead:
+		/*Note.findById(req.params.id, (err, note) => {
 			if (err) throw err;
 
 			res.render('new-note', {note: note});
-		});
+		});*/
 	},
 
 	update (req, res) {
-		Note.findByIdAndUpdate(req.params.id, req.body, (err, note) => {
+		req.note.update(req.body, (err) => {
+			if (err) throw err;
+
+			res.redirect(`/notes/${req.note._id}`);
+		// Old way of writing it
+		/* Note.findByIdAndUpdate(req.params.id, req.body, (err, note) => {
 				if (err) throw err;
 
 				res.redirect(`/notes/${note._id}`);
-			});
+			}); */
+		});
 	},
 
 	index (req, res) {
@@ -28,7 +44,13 @@ module.exports = {
 	},
 
 	newNote (req, res) {
-		res.render('new-note');
+		Category.find({}, (err, categories) => {
+			if (err) throw err;
+
+			res.render('new-note', {
+				categories: categories
+			});
+		});
 	},
 
 	create (req, res) {
@@ -40,18 +62,27 @@ module.exports = {
 	},
 
 	show (req, res) {
-		Note.findById(req.params.id, (err, note) => {
+		console.log(req.note);
+		res.render('show-note', {note: req.note});
+		// Old way of writing it
+		/*Note.findById(req.params.id, (err, note) => {
 			if (err) throw err;
 
 			res.render('show-note', {note: note});
-		});
+		});*/
 	},
 
 	destroy (req, res) {
-		Note.findByIdAndRemove(req.params.id, (err) => {
+		req.note.remove((err) => {
 			if (err) throw err;
 
 			res.redirect('/notes');
 		});
+		// Old way of writing it
+		/*Note.findByIdAndRemove(req.params.id, (err) => {
+			if (err) throw err;
+
+			res.redirect('/notes');
+		});*/
 	}
 };
