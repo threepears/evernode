@@ -23,7 +23,7 @@ app.use(methodOverride('_method'));
 app.use(logger);
 
 app.get('/', (req, res) => {
-	res.send('Server Running');
+	res.redirect('/notes');
 });
 
 app.use(note);
