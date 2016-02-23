@@ -24,11 +24,16 @@ Run the following command to install all dependencies:
 $ npm install
 ```
 
-Run the following two commands in your Terminal (in seperate tabs) to start the Nodemon server and the Mongo server:
+Now start your Mongo server in Terminal with this command:
 
 ```sh
-$ npm run serve
 $ mongod
+```
+
+Then start your regular Node server with this Terminal command:
+
+```sh
+$ npm run start
 ```
 
 Now open your browser and go to http://localhost:3000/ to start and use the application!
